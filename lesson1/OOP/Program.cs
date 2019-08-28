@@ -11,6 +11,8 @@ namespace OOP
         static void Main(string[] args)
         {
             Console.WriteLine("secewd");
+            int a = 1;
+            Console.WriteLine($"{a},{a}");
         }
     }
 }
