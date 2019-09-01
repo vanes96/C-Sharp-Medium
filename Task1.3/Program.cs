@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task1._3
 {
     class Bag
     {
-        public List<Item> Items;
-        public int MaxWeidth;
+        private IReadOnlyCollection<Item> _items;
+        private readonly uint _maxWeight;
 
-        public void AddItem(string name, int count)
+        public void AddItem(string name, uint weight)
         {
-            int currentWeidth = Items.Sum(item => item.Count);
-            Item targetItem = Items.FirstOrDefault(item => item.Name == name);
+            uint currentWeidth = (uint)_items.Sum(item => item.Weight);
+            Item targetItem = _items.FirstOrDefault(item => item.Name == name);
 
             if (targetItem == null)
                 throw new InvalidOperationException();
 
-            if (currentWeidth + count > MaxWeidth)
+            if (currentWeidth + weight > _maxWeight)
                 throw new InvalidOperationException();
 
-            targetItem.Count += count;
+            targetItem.AddWeight(weight);
         }
     }
 
     class Item
     {
-        public int Count;
-        public string Name;
+        public uint Weight { get; private set; }
+        public string Name { get; }
+        public void AddWeight(uint weight)
+        {
+            Weight += weight;
+        }
     }
 }
