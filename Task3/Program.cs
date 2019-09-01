@@ -35,11 +35,4 @@ namespace Task3
             Weight += weight;
         }
     }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }
 }
