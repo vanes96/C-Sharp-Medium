@@ -42,11 +42,4 @@ namespace Task4
             // If (Weapon.IsReloading()) ...
         }
     }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }
 }
