@@ -6,15 +6,18 @@ namespace Task1._3
 {
     class Bag
     {
-        private IReadOnlyCollection<Item> _items;
-        private readonly uint _maxWeight;
+        private List<Item> _items;
+        private readonly int _maxWeight;
 
-        public void AddItem(string name, uint weight)
+        public void AddItem(string name, int weight)
         {
-            uint currentWeidth = (uint)_items.Sum(item => item.Weight);
+            int currentWeidth = _items.Sum(item => item.Weight);
             Item targetItem = _items.FirstOrDefault(item => item.Name == name);
 
             if (targetItem == null)
+                throw new InvalidOperationException();
+
+            if (weight < 0)
                 throw new InvalidOperationException();
 
             if (currentWeidth + weight > _maxWeight)
@@ -26,10 +29,15 @@ namespace Task1._3
 
     class Item
     {
-        public uint Weight { get; private set; }
+        public int Weight { get; private set; }
+
         public string Name { get; }
-        public void AddWeight(uint weight)
+
+        public void AddWeight(int weight)
         {
+            if (weight < 0)
+                throw new InvalidOperationException();
+
             Weight += weight;
         }
     }
