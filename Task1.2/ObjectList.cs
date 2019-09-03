@@ -16,29 +16,33 @@ namespace Task1._2
                 _objects.Add(new Object(point.X, point.Y));
         }
 
-        public bool IsObjectAlive(int index)
+        public bool CheckObjectCollision(int index)
         {
             for (int i = 0; i < _objects.Count; i++)
                 if (i != index && _objects[i].X == _objects[index].X && _objects[i].Y == _objects[index].Y)
-                    return false;
+                    return true;
 
-            return true;
+            return false;
         }
 
         public void MoveAllObjectsRandomly()
         {
+            Random random = new Random();
+
             foreach (var obj in _objects)
-                obj.MoveRandomly();
+                obj.MoveRandomly(random);
         }
 
         public void MoveCursorToAllObjects()
         {
             for (int i = 0; i < _objects.Count; i++)
-                if (IsObjectAlive(i))
+            {
+                if (!CheckObjectCollision(i))
                 {
                     Console.SetCursorPosition(_objects[i].X, _objects[i].Y);
                     Console.Write(i + 1);
                 }
+            }
         }
     }
 }
