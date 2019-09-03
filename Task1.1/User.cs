@@ -3,8 +3,11 @@
     class User
     {
         public string Name { get; }
+
         public uint Id { get; }
+
         public uint Salary { get; }
+
         public User(uint id, string name, uint salary)
         {
             Id = id;

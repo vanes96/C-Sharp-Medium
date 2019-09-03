@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            UserList users = new UserList(new string[] { "Ivan", "Petr", "Olga", "Anna", "Dariana" }, new uint[] { 500, 300, 450, 200, 220 }, 5);
+            User ivan = new User(1, "Ivan", 500), petr = new User(2, "Petr", 301), olga = new User(3, "Olga", 450), dariana = new User(4, "Dariana", 220);
+            UserList users = new UserList(new User[] { ivan, petr, olga, dariana });
 
             User user1 = users.GetUserById(1);
             User user2 = users.GetUserByName("Petr");
