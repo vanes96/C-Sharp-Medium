@@ -1,4 +1,7 @@
-﻿namespace Task1._1
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Task1._1
 {
     class Program
     {
