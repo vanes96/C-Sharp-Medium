@@ -16,13 +16,45 @@ namespace Task1._2
                 _objects.Add(new Object(point.X, point.Y));
         }
 
-        public bool CheckObjectCollision(int index)
+        public void CheckAllObjectsCollisions()
         {
-            for (int i = 0; i < _objects.Count; i++)
-                if (i != index && _objects[i].X == _objects[index].X && _objects[i].Y == _objects[index].Y)
-                    return true;
+            int i = 0, j = 1;
+            Object object1, object2;
 
-            return false;
+            for (; i < _objects.Count - 1;)
+            {
+                object1 = _objects[i];
+
+                for (;;)
+                {
+                    object2 = _objects[j];
+
+                    if (i != j)
+                    {
+                        object1.CheckCollision(object2.X, object2.Y);
+                        object2.CheckCollision(object1.X, object1.Y);
+
+                        if (object2.IsAlive)
+                            j++;
+                        else
+                            _objects.Remove(object2);      
+                    }
+                    else
+                        j++;
+
+                    if (j >= _objects.Count)
+                    {
+                        j = 1;
+                        break;
+                    }
+                }
+
+                if (object1.IsAlive)
+                    i++;
+                else
+                    _objects.Remove(object1);
+            }
+
         }
 
         public void MoveAllObjectsRandomly()
@@ -30,14 +62,14 @@ namespace Task1._2
             Random random = new Random();
 
             foreach (var obj in _objects)
-                obj.MoveRandomly(random);
+                obj.MoveRandomly(random);        
         }
 
         public void MoveCursorToAllObjects()
         {
             for (int i = 0; i < _objects.Count; i++)
             {
-                if (!CheckObjectCollision(i))
+                if (_objects[i].IsAlive)
                 {
                     Console.SetCursorPosition(_objects[i].X, _objects[i].Y);
                     Console.Write(i + 1);

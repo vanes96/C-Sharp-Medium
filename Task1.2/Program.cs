@@ -10,6 +10,7 @@ namespace Task1._2
 
             while (true)
             {
+                objects.CheckAllObjectsCollisions();
                 objects.MoveAllObjectsRandomly();
                 objects.MoveCursorToAllObjects();
             }
