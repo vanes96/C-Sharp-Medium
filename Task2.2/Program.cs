@@ -22,14 +22,13 @@ namespace Task2._2
                     case "open":
                         Console.WriteLine("Please enter your name..");
                         bank.OpenAccount(Console.ReadLine());
-                        Account lastAccount = bank.GetLastAccount();
-                        Console.WriteLine($"-----------------------\nAccount has been opened\nId: {lastAccount.Id}\nOwner name: {lastAccount.OwnerName}\n");
                         break;
                     case "transfer":
 
                         break;
                     case "close":
-
+                        Console.WriteLine("Please enter account id..");
+                        bank.CloseAccout(int.Parse(Console.ReadLine()));
                         break;
                     case "undo":
 

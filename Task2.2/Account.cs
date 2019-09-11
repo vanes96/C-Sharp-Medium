@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task2._2
 {
-    class Account
+    public class Account
     {
         public int Balance { get; private set; }
         public int Id { get; }
@@ -21,24 +21,45 @@ namespace Task2._2
 
         public bool GetMoney(int amount)
         {
-            if (amount <= 0)
-                throw new ArgumentOutOfRangeException(amount.ToString());
-
-            if (Balance >= amount)
+            try
             {
-                Balance -= amount;
-                return true;
+                if (amount <= 0)
+                    throw new ArgumentOutOfRangeException(amount.ToString());
+
+                if (Balance >= amount)
+                {
+                    Balance -= amount;
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("На счете недостаточно средств");
+                    return false;
+                }
             }
-            else
+            catch(Exception e)
+            {
+                Console.WriteLine("Произошла ошибка {0}", e);
                 return false;
+            }
         }
 
-        public void PutMoney(int amount)
+        public bool PutMoney(int amount)
         {
-            if (amount <= 0)
-                throw new ArgumentOutOfRangeException(amount.ToString());
+            try
+            {
+                if (amount <= 0)
+                    throw new ArgumentOutOfRangeException(amount.ToString());
 
-            Balance += amount;
+                Balance += amount;
+                Console.WriteLine("Операция выполнена успешно");
+                return true;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Произошла ошибка {0}", e);
+                return false;
+            }
         }
     }
 }
