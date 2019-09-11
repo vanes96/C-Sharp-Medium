@@ -10,7 +10,7 @@ namespace Task2._2
     {
         public override void Execute(ref List<Account> accounts)
         {
-            if (accounts.RemoveAll(a => a.Id == _accountId) > 0)
+            if (accounts.RemoveAll(a => a.Id == AccountId) > 0)
                 Console.WriteLine("Операция выполнена успешно");
             else
                 Console.WriteLine("Счета с таким Id не существует");
@@ -18,7 +18,8 @@ namespace Task2._2
 
         public CloseCommand(int accountId)
         {
-            _accountId = accountId;
+            AccountId = accountId;
+            Name = "close";
         }
     }
 }

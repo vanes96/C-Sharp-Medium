@@ -9,7 +9,8 @@ namespace Task2._2
     public class OpenCommand : Command
     {
         public string OwnerName { get; private set; }
-       
+        public int StartBalance { get; private set; }
+
         public override void Execute(ref List<Account> accounts)
         {
             try
@@ -17,8 +18,8 @@ namespace Task2._2
                 if (string.IsNullOrWhiteSpace(OwnerName))
                     throw new ArgumentException(OwnerName);
 
-                _accountId = accounts.Count + 1;
-                accounts.Add(new Account(_accountId, OwnerName));
+                AccountId = accounts.Count + 1;
+                accounts.Add(new Account(AccountId, OwnerName, StartBalance));
                 Console.WriteLine("Операция выполнена успешно");
                 //return true;
             }
@@ -28,15 +29,17 @@ namespace Task2._2
                 //return false;
             }
         }
-        
-        public OpenCommand(string ownerName)
+
+        public OpenCommand(string ownerName, int amount)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(ownerName))
-                    throw new ArgumentException(ownerName);
+                if (string.IsNullOrWhiteSpace(ownerName) || amount <= 0)
+                    throw new ArgumentException(ownerName + amount);
 
                 OwnerName = ownerName;
+                StartBalance = amount;
+                Name = "open";
                 //Console.WriteLine("Операция выполнена успешно");
             }
             catch (Exception e)

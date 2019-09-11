@@ -8,7 +8,9 @@ namespace Task2._2
 {
     public abstract class Command
     {
-        protected int _accountId;
+        public string Name { get; protected set; }
+        public int AccountId { get; protected set; }
+
         public virtual void Execute(ref List<Account> accounts)
         {
 
