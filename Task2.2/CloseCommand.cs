@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 
 namespace Task2._2
 {
-    public class CloseCommand : ICommand
+    public class CloseCommand : Command
     {
-        public void Execute(int senderId, ref List<Account> accounts, string ownerName = null, int? receiverId = null, int? amount = null)
+        public override void Execute(ref List<Account> accounts)
         {
-            if (accounts.RemoveAll(a => a.Id == senderId) > 0)
+            if (accounts.RemoveAll(a => a.Id == _accountId) > 0)
                 Console.WriteLine("Операция выполнена успешно");
             else
                 Console.WriteLine("Счета с таким Id не существует");
+        }
+
+        public CloseCommand(int accountId)
+        {
+            _accountId = accountId;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task2._2
 {
-    public class TransferCommand : ICommand
+    public class TransferCommand : Command
     {
         public void Execute(int senderId, ref List<Account> accounts, string ownerName = null, int? receiverId = null, int? amount = null)
         {

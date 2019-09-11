@@ -10,28 +10,36 @@ namespace Task2._2
     {
         static void Main(string[] args)
         {
-            Bank bank = new Bank();
+            List<Command> commands = new List<Command>();
+            List<Account> accounts = new List<Account>();
 
-            while(true)
+            while(Console.ReadKey().Key != ConsoleKey.Escape)
             {
+                Console.Clear();
                 Console.WriteLine("Please enter command..");
-                string command = Console.ReadLine();
-                
-                switch(command)
+                string commandName = Console.ReadLine();
+                Command command = null;
+
+                switch (commandName)
                 {
                     case "open":
                         Console.WriteLine("Please enter your name..");
-                        bank.OpenAccount(Console.ReadLine());
+                        command = new OpenCommand(Console.ReadLine());
+                        commands.Add(command);
                         break;
                     case "transfer":
 
                         break;
                     case "close":
                         Console.WriteLine("Please enter account id..");
-                        bank.CloseAccout(int.Parse(Console.ReadLine()));
+                        command = new CloseCommand(int.Parse(Console.ReadLine()));
+                        commands.Add(command);
                         break;
                     case "undo":
 
+                        break;
+                    default:
+                        Console.WriteLine("Command {0} doesnt exist", commandName);
                         break;
                 }
             }

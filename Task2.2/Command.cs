@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Task2._2
 {
-    public interface ICommand
+    public abstract class Command
     {
-        void Execute(int senderId, ref List<Account> accounts, string ownerName = null, int? receiverId = null, int? amount = null);
+        protected int _accountId;
+        public virtual void Execute(ref List<Account> accounts)
+        {
+
+        }
     }
 
     public enum CommandType { Open, Close, Transfer, Undo}
