@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Task2._3
 {
@@ -6,7 +7,10 @@ namespace Task2._3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            List<UIElement> UIelements = new List<UIElement>();
+
+            Button button = new Button(15, 5, 7, 2);
+            button.Draw();
         }
     }
 }
