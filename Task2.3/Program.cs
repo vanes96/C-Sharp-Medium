@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Task2._3
 {
@@ -14,9 +13,11 @@ namespace Task2._3
             List<UIElement> UIelements = new List<UIElement>();
             Button button = new Button(5, 5, 15, 4);
             TextField textField = new TextField(2, 2, 10, 2);
+            Checkbox checkbox = new Checkbox(6, 6, 1, 1);
 
-            UIelements.Add(button);
+            //UIelements.Add(button);
             UIelements.Add(textField);
+            UIelements.Add(checkbox);
 
             while(true)
             {
