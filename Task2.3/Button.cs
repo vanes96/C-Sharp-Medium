@@ -7,33 +7,35 @@ namespace Task2._3
 {
     public class Button : UIElement
     {
-        public override void Draw(Point cursorPosition, Point elementPosition, int elementWidth, int elementHeight)
+        public override void Draw()
         {
-            base.Draw(cursorPosition, elementPosition, elementWidth, elementHeight);
+            Point previousCursorPosition = new Point(Cursor.Position.X, Cursor.Position.Y);
+            int cursorY = Position.Y - 1;
 
+            Cursor.SetPosition(Position.X + 1, cursorY);
+
+            if (Focused)
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
             if (Selected)
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
 
-            int cursorY = Position.Y;
-            Console.SetCursorPosition(Position.X, cursorY);
-
-            for (int i = 0; i < Width; i++)
-                Console.Write("-");
-            Console.SetCursorPosition(Position.X, ++cursorY);
+            for (int i = 0; i < Width - 2; i++)
+                Console.Write("_");
 
             for (int j = 0; j < Height; j++)
             {
+                Cursor.SetPosition(Position.X, ++cursorY);
                 Console.Write("|");
-                for (int i = 0; i < Width - 2; i++)
-                    Console.Write(" ");
+                Cursor.SetPosition(Position.X + Width - 1, cursorY);
                 Console.Write("|");
-                Console.SetCursorPosition(Position.X, ++cursorY);
             }
 
-            for (int i = 0; i < Width; i++)
-                Console.Write("-");
+            Cursor.SetPosition(Position.X + 1, cursorY);
+            for (int i = 0; i < Width - 2; i++)
+                Console.Write("_");
 
             Console.ResetColor();
+            Cursor.SetPosition(previousCursorPosition.X, previousCursorPosition.Y);
         }
 
         public Button(int x, int y, int width, int height)
@@ -42,6 +44,9 @@ namespace Task2._3
             Position = new Point(x, y);
             Width = width;
             Height = height;
+
+            Cursor.OnClick += OnClick;
+            Cursor.OnMove += OnFocus;
         }
     }
 }

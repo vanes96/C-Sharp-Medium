@@ -11,25 +11,34 @@ namespace Task2._3
         public int Height { get; protected set; }
         public Point Position { get; protected set; }
         public bool Selected { get; protected set; }
+        public bool Focused { get; protected set; }
 
-        // Объявляем делегат
-        public delegate void ClickHandler(Point cursorPosition, Point elementPosition, int elementWidth, int elementHeight);
-        // Событие, возникающее при выводе денег
-        public event ClickHandler TryClick;
-
-        public virtual void Draw(Point cursorPosition, Point elementPosition, int elementWidth, int elementHeight)
+        public virtual void Draw()
         {
-            //if (cursorPosition.X >= Position.X && cursorPosition.X <= Position.X + Width &&
-            //    cursorPosition.Y >= Position.Y && cursorPosition.Y <= Position.Y + Height)
-            //    Selected = true;
-            //else
-            //    Selected = false;
-            TryClick(cursorPosition, elementPosition, elementWidth, elementHeight);
+
         }
 
         public UIElement()
         {
 
+        }
+
+        public void OnClick(Point cursorPosition)
+        {
+            if (cursorPosition.X >= Position.X && cursorPosition.X < Position.X + Width &&
+                cursorPosition.Y >= Position.Y && cursorPosition.Y < Position.Y + Height)
+                Selected = true;
+            else
+                Selected = false;
+        }
+
+        public void OnFocus(Point cursorPosition)
+        {
+            if (cursorPosition.X >= Position.X && cursorPosition.X < Position.X + Width &&
+                cursorPosition.Y >= Position.Y && cursorPosition.Y < Position.Y + Height)
+                Focused = true;
+            else
+                Focused = false;
         }
     }
 }

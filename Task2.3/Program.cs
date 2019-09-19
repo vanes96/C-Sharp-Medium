@@ -6,67 +6,44 @@ namespace Task2._3
 {
     class Program
     {
+        public delegate void KeyHandler(ConsoleKeyInfo keyInfo);
+        public static event KeyHandler OnKeyPress;
+
         static void Main(string[] args)
         {
             List<UIElement> UIelements = new List<UIElement>();
-            Point cursorPosition = new Point(0, 0);
+            Button button = new Button(5, 5, 15, 4);
+            TextField textField = new TextField(2, 2, 10, 2);
 
-            Button button = new Button(10, 15, 15, 4);       
             UIelements.Add(button);
-            button.TryClick += TryClick;
-            //button.TryClick += new Button.ClickHandler(TryClick);
-
-
-            Console.SetCursorPosition(cursorPosition.X, cursorPosition.Y);
+            UIelements.Add(textField);
 
             while(true)
             {
-                ConsoleKey pressedKey = Console.ReadKey().Key;
+                var keyInfo = ReadKey();
 
-                switch(pressedKey)
-                {
-                    case ConsoleKey.LeftArrow:
-                        cursorPosition.X--;
-                        break;
-                    case ConsoleKey.RightArrow:
-                        cursorPosition.X++;
-                        break;
-                    case ConsoleKey.UpArrow:
-                        cursorPosition.Y--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        cursorPosition.Y++;
-                        break;
-                }
+                if (keyInfo.Key == ConsoleKey.Enter)
+                    Cursor.Click();
+                else
+                    Cursor.TryMove(keyInfo);
 
+                //if (Char.IsLetterOrDigit(key.ToString().ToCharArray()[0]))
+
+               
                 foreach(var uiElement in UIelements)
                 {
-                    //uiElement.TryClick_(cursorPosition);
-                    uiElement.Draw(cursorPosition, uiElement.Position, uiElement.Width, uiElement.Height);
-                }
-
-                Console.SetCursorPosition(cursorPosition.X, cursorPosition.Y);
-
-                if (Console.ReadKey().Key == ConsoleKey.Enter)
-                {
-
-                }
-            }
-
-            
+                    uiElement.Draw();
+                }             
+            }     
         }
 
-        private static void TryClick(Point clickPosition, Point elementPosition, int width, int height)
+        public static ConsoleKeyInfo ReadKey()
         {
-            if (clickPosition.X >= elementPosition.X && clickPosition.X <= elementPosition.X + width &&
-                clickPosition.Y >= elementPosition.Y && clickPosition.Y <= elementPosition.Y + height)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-            }
-            else
-            {
-                Console.ResetColor();
-            }
+            var keyInfo = Console.ReadKey(true);
+
+            OnKeyPress?.Invoke(keyInfo);
+
+            return keyInfo;
         }
     }
 }
