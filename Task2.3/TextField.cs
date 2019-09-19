@@ -14,7 +14,6 @@ namespace Task2._3
             int cursorY = Position.Y - 1;
             int maxTextWidth = Width - 2, textLength = _text.Length;
 
-
             Cursor.SetPosition(Position.X + 1, cursorY);
 
             if (Focused)

@@ -27,9 +27,6 @@ namespace Task2._3
                 else
                     Cursor.TryMove(keyInfo);
 
-                //if (Char.IsLetterOrDigit(key.ToString().ToCharArray()[0]))
-
-               
                 foreach(var uiElement in UIelements)
                 {
                     uiElement.Draw();
