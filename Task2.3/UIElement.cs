@@ -21,22 +21,26 @@ namespace Task2._3
 
         }
 
-        public void OnClick(Point cursorPosition)
+        public virtual void OnClick(Point cursorPosition)
         {
-            if (cursorPosition.X >= Position.X && cursorPosition.X < Position.X + Width &&
+            if (cursorPosition.X > Position.X && cursorPosition.X < Position.X + Width + 1 &&
                 cursorPosition.Y >= Position.Y && cursorPosition.Y < Position.Y + Height)
-                Selected = true;
+                Selected = !Selected;
             else
                 Selected = false;
+
+            Draw();
         }
 
-        public void OnFocus(Point cursorPosition)
+        public virtual void OnFocus(Point cursorPosition)
         {
-            if (cursorPosition.X >= Position.X && cursorPosition.X < Position.X + Width &&
+            if (cursorPosition.X > Position.X && cursorPosition.X < Position.X + Width + 1 &&
                 cursorPosition.Y >= Position.Y && cursorPosition.Y < Position.Y + Height)
                 Focused = true;
             else
                 Focused = false;
+
+            Draw();
         }
     }
 }

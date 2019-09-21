@@ -11,15 +11,18 @@ namespace Task2._3
         static void Main(string[] args)
         {
             List<UIElement> UIelements = new List<UIElement>();
-            Button button = new Button(5, 5, 15, 4);
-            TextField textField = new TextField(2, 2, 10, 2);
-            Checkbox checkbox = new Checkbox(6, 6, 1, 1);
+            Button button = new Button(10, 1, 7, 5);
+            TextField textField = new TextField(0, 7, 10, 2);
+            Checkbox checkbox = new Checkbox(0, 1, 3, 3);
 
-            //UIelements.Add(button);
+            UIelements.Add(button);
             UIelements.Add(textField);
             UIelements.Add(checkbox);
 
-            while(true)
+            foreach (var uiElement in UIelements)
+                uiElement.Draw();
+
+            while (true)
             {
                 var keyInfo = ReadKey();
 
@@ -27,12 +30,8 @@ namespace Task2._3
                     Cursor.Click();
                 else
                     Cursor.TryMove(keyInfo);
-
-                foreach(var uiElement in UIelements)
-                {
-                    uiElement.Draw();
-                }             
-            }     
+            }
+            //Console.ReadLine();
         }
 
         public static ConsoleKeyInfo ReadKey()
