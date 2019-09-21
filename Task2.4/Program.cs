@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Task2._4
@@ -12,45 +13,32 @@ namespace Task2._4
         static void Main(string[] args)
         {
             List<string> textFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.txt").Where(f => HasDigit(f)).ToList();
+
             foreach (var file in textFiles)
             {
                 try
                 {
-
-                    //Console.WriteLine();
-                    //Console.WriteLine("******считываем построчно********");
-                    //using (StreamReader sr = new StreamReader(file, System.Text.Encoding.Default))
-                    //{
-                    //    string line;
-                    //    while ((line = sr.ReadLine()) != null)
-                    //    {
-                    //        Console.WriteLine(line);
-                    //    }
-                    //}
-
-                    Console.WriteLine();
-                    Console.WriteLine("******считываем блоками********");
                     using (StreamReader sr = new StreamReader(file, System.Text.Encoding.Default))
                     {
-                        char[] array = new char[4];
-                        // считываем 4 символа
-                        sr.Read(array, 0, 4);
-
-                        Console.WriteLine(array);
+                        while (!sr.EndOfStream)
+                        { 
+                            Console.Write((char)sr.Read());
+                            Thread.Sleep(50);
+                        }
                     }
-                    Console.ReadKey();
+
+                    Console.WriteLine();
+                    Thread.Sleep(3000);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }
-
-
-            
+            Console.ReadKey();
         }
 
-        static bool HasDigit(string fileName)
+        private static bool HasDigit(string fileName)
         {
             const string digits = "0123456789";
 
