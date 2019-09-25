@@ -13,7 +13,7 @@ namespace Task2._2
 
         public virtual void Execute(ref List<Account> accounts)
         {
-
+            //return true;
         }
     }
 

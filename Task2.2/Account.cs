@@ -12,10 +12,10 @@ namespace Task2._2
         public int Id { get; }
         public string OwnerName { get; }
 
-        public Account(int id, string ownerName, int balance)
+        public Account(int id, string ownerName)
         {
             Id = id;
-            Balance = balance;
+            Balance = 0;
             OwnerName = ownerName;
         }
 

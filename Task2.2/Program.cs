@@ -20,22 +20,47 @@ namespace Task2._2
                 string commandName = Console.ReadLine();
                 Command command;
 
+
                 switch (commandName)
                 {
                     case "open":
-                        Console.WriteLine("Please enter: your_name start_balance..");
-                        string[] commandInput = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                        Console.WriteLine("Please enter your name..");
+                        try
+                        {
+                            command = new OpenCommand(Console.ReadLine());
+                            command.Execute(ref accounts);
+                            commands.Add(command);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine(e.Message);
+                            Console.ResetColor();
+                        }
 
-                        command = new OpenCommand(commandInput[0], int.Parse(commandInput[1]));
-                        commands.Add(command);
-                        command.Execute(ref accounts);
+                        break;
+                    case "put":
+
+                        break;
+                    case "get":
+
                         break;
                     case "transfer":
                         Console.WriteLine("Please enter: senderId receiverId amount..");
-                        string[] transferInput = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                        command = new TransferCommand(int.Parse(transferInput[0]), int.Parse(transferInput[1]), int.Parse(transferInput[2]));
-                        commands.Add(command);
-                        command.Execute(ref accounts);
+                        try
+                        {
+                            string[] transferInput = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                            command = new TransferCommand(int.Parse(transferInput[0]), int.Parse(transferInput[1]), int.Parse(transferInput[2]));
+                            command.Execute(ref accounts);
+                            commands.Add(command);
+                            
+                        }
+                        catch(Exception e)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine(e.Message);
+                            Console.ResetColor();
+                        }
                         break;
                     case "close":
                         Console.WriteLine("Please enter account id..");
@@ -54,10 +79,12 @@ namespace Task2._2
                                 undoCommand.Execute(ref accounts);
                                 break;
                             case "close":
-                                undoCommand = new OpenCommand((command as OpenCommand).OwnerName, (command as OpenCommand).StartBalance);
+                                undoCommand = new OpenCommand((command as OpenCommand).OwnerName);
                                 undoCommand.Execute(ref accounts);
                                 break;
-                            
+                            case "undo":
+
+                            break;
                         }
 
                         commands.Remove(command);

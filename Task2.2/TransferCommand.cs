@@ -19,7 +19,7 @@ namespace Task2._2
                 Console.WriteLine("Операция выполнена успешно");
             }
             else
-                Console.WriteLine("Невозможно осуществить перевод средств");
+                throw new Exception("Невозможно осуществить перевод средств");
         }
 
         public TransferCommand(int senderId, int receiverId, int amount)
