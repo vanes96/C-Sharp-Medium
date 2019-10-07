@@ -11,6 +11,16 @@ namespace Task2._5
         private static List<Good> _goods = new List<Good>();
         private static int _nextGoodId = 1;
 
+        public static bool FindId(int id)
+        {
+            var good = _goods.Find(g => g.Id == id);
+
+            if (good == null)
+                return false;
+            else
+                return true;
+        }
+
         public static Good GetGood(int id)
         {
             try
@@ -30,16 +40,16 @@ namespace Task2._5
 
         public static void ShowGoods()
         {
-            Console.WriteLine("\nТовары\n======");
+            Console.WriteLine("Товары\n======");
 
             foreach (var good in _goods)
                 Console.WriteLine("{0})  {1}  {2}", good.Id, good.Name, good.Price);
+            Console.WriteLine();
         }
 
         public static void BuyGood(int id, bool pickup = false, int? discount = null)
         {
             Good good = GetGood(id);
-            _goods.Remove(good);
 
             if (discount.HasValue)
             {
@@ -48,6 +58,7 @@ namespace Task2._5
                     throw new Exception("Товар со скидкой доступен только для самовывоза!");
             }
 
+            _goods.Remove(good);
             Console.WriteLine("\nКуплен товар\n======");
             Console.WriteLine("{0})  {1}  {2}  {3}  {4}", good.Id, good.Name, good.DiscountPrice ?? good.Price, discount != null ? $"Скидка {discount}%" : "Без скидки", pickup ? "Самовывоз" : "Доставка");
         }
