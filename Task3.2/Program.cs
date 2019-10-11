@@ -10,29 +10,18 @@ namespace Task3._2
     {
         static void Main(string[] args)
         {
-            while (Console.ReadKey().Key != ConsoleKey.Escape)
-            {
-                
-                string commandNumber = Console.ReadLine();
+            List<Product> products = new List<Product>();
+            products.Add(new Product(1, "iPhoneX", 90, 3));
+            products.Add(new Product(2, "Lenovo76", 45, 6));
+            products.Add(new Product(3, "Whirlpool", 57, 15));
 
-                switch (commandNumber)
-                {
-                    case "1":
-                        
-                        break;
-                    case "2":
-                        
-                        break;
-                    case "3":
-                        
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"Команда {commandNumber} не существует!");
-                        Console.ResetColor();
-                        break;
-                }
-            }
+            var searchedProducts = products.Where(p => p.Price < 100 && p.Quantity > 5);
+
+            Console.WriteLine("{0,-2}|{1,-15}|{2,-5}|{3,-3}\n-----------------------------------", "Id", "Название", "Цена", "Количество");
+            foreach (var product in searchedProducts)
+                Console.WriteLine("{0,-2}|{1,-15}|{2,-5}|{3,-3}", product.Id, product.Name, product.Price, product.Quantity);
+
+            Console.ReadKey();
         }
     }
 }
