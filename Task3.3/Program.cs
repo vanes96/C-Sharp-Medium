@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -11,56 +12,54 @@ namespace Task3._3
     {
         static void Main(string[] args)
         {
-            Uri uri = new Uri("https://yandex.ru/");
-            var jsonData = new Dictionary<string, string>
+            try
             {
-              {"CustomerId", "5"},
-              {"CustomerName", "Pepsi"}
-            };
-
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(jsonData), Encoding.UTF8, "application/json");
-
-            //var task = Task.Run(() => SendURI(uri, "POST", content));
-            var task = Task.Run(() => SendRequest(uri, "GET", content));
-
-            task.Wait();
-
-            Console.WriteLine(task.Result);
-            Console.ReadLine();
+                Task.Run(() => SendRequestAsync(new Uri("https://yandex.ru/"))).Wait();
+            }
+            catch(Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.ResetColor();
+                Console.ReadKey();
+            }
+            //var jsonData = new Dictionary<string, string> { {"Field1", "value1"}, {"Field2", "value2"} };
+            //HttpContent content = new StringContent(JsonConvert.SerializeObject(jsonData), Encoding.UTF8, "application/json");
         }
 
-        static async Task<string> SendRequest(Uri uri, string method = "GET", HttpContent content = null)
+        static async Task SendRequestAsync(Uri uri, string callbackMethodName = "WriteResponseContent", string httpMethod = "GET", HttpContent httpContent = null)
         {
-            var response = string.Empty;
             using (var client = new HttpClient())
             {
                 HttpRequestMessage request = new HttpRequestMessage
                 {
-                    Method = new HttpMethod(method),
+                    Method = new HttpMethod(httpMethod),
                     RequestUri = uri,
-                    Content = content
+                    Content = httpContent
                 };
 
-                HttpResponseMessage result = null;
+                HttpResponseMessage responseMessage = null;
+                MethodInfo callbackMethod = typeof(Program).GetMethod(callbackMethodName);
 
-                switch(method)
+                switch (httpMethod)
                 {
                     case "GET":
-                        result = await client.GetAsync(uri);
-                        if (result.IsSuccessStatusCode)
-                            response = await result.Content.ReadAsStringAsync();
+                        responseMessage = await client.GetAsync(uri);                        
                         break;
-
                     case "POST":
-                        result = await client.PostAsync(uri, content);
-                        if (result.IsSuccessStatusCode)
-                            response = result.StatusCode.ToString();
+                        responseMessage = await client.PostAsync(uri, httpContent);
                         break;
                 }
-            }
 
-            return response;
+                if (responseMessage.IsSuccessStatusCode)
+                    callbackMethod.Invoke(null, new object[] { responseMessage.StatusCode.ToString() });
+            }
         }
 
+        public static void WriteResponseContent(string responseContent)
+        {
+            Console.WriteLine(responseContent);
+            Console.ReadKey();
+        }
     }
 }
