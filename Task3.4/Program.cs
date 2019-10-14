@@ -13,15 +13,18 @@ namespace Task3._4
             SomeGlobalClass SGC = new SomeGlobalClass();
             BigData d = new BigData();
             BigData d2 = new BigData();
+
+            Console.WriteLine($"Занятая память со всеми объектами: {GC.GetTotalMemory(true)}");
+
             d = null;
-            d2 = null;
-
             GC.Collect();
+            Console.WriteLine($"Занятая память без 1 объекта: {GC.GetTotalMemory(true)}");
 
-            while (true)
-            {
+            d2 = null;
+            GC.Collect();
+            Console.WriteLine($"Занятая память без объектов: {GC.GetTotalMemory(true)}");
 
-            }
+            Console.ReadKey();
         }
     }
 
@@ -51,7 +54,7 @@ namespace Task3._4
         public BigData()
         {
             Data = new int[100000];
-            SomeGlobalClass.Instance.OnSomething += EventHandler;
+            //SomeGlobalClass.Instance.OnSomething += EventHandler; !!! Связь с глобальным классом
         }
 
         public void EventHandler()
