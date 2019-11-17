@@ -40,10 +40,7 @@ namespace Task3._4
 
         public void DoSomething()
         {
-            if (OnSomething != null)
-            {
-                OnSomething();
-            }
+            OnSomething?.Invoke();
         }
     }
 
