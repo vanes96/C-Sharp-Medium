@@ -14,11 +14,15 @@ namespace Task3._1
             Good[] goods = new Good[] { new Good("Смартфон_Iphone_X", 95000, 1), new Good("Ноутбук_HP_Pavilionwertdsd", 85000, 2),
                                         new Good("Бритва_scholl", 5400, 3)};
        
-            ShowGoods(goods);
-                  
-            while(Console.ReadKey().Key != ConsoleKey.Escape)
+            ShowGoods(goods);           
+
+            while (true)
             {
+                Console.WriteLine("\nНажмите любую клавишу..");
+                if (Console.ReadKey().Key == ConsoleKey.Escape)
+                    break;
                 Console.WriteLine("\nСортировать по: 1-названию или 2-цене или 3-уровню. Введите номер команды");
+
                 string commandNumber = Console.ReadLine();
 
                 switch(commandNumber)
@@ -44,7 +48,7 @@ namespace Task3._1
         static void ShowGoods(IEnumerable<Good> goods)
         {
             Console.WriteLine("\n{0, -1} | {1,-30} | {2,-10} | {3,-1}", "N", "Название", "Цена", "Уровень");
-            Console.WriteLine(" ---------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------");
 
             int i = 1;
             foreach (var good in goods)
