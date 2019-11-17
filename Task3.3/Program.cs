@@ -12,9 +12,13 @@ namespace Task3._3
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Введите полный uri..");
+            string url = Console.ReadLine();
+
             try
             {
-                Task.Run(() => SendRequestAsync(new Uri("https://yandex.ru/"))).Wait();
+                Uri uri = new Uri(url);
+                Task.Run(() => SendRequestAsync(uri)).Wait();
             }
             catch(Exception e)
             {
