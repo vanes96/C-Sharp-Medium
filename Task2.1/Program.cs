@@ -4,32 +4,48 @@ namespace Task2._1
 {
     class Program
     {
+        static void Main (string[] args)
+        {
+            Combat cmb = new Combat();
+            cmb.TakeDamage(4);
+            Console.ReadKey();
+        }
+
         class Combat : Human
         {
             private int _armor;
 
-            public override void TakeDamage(int damage)
+            protected override void ReceiveDamage(int damage)
             {
-                _health -= damage - _armor;
-
-                if (_health <= 0)
-                    Die();
-            }
+                ReduceHealth(damage - _armor);
+                Console.WriteLine("Наследник");
+            }    
         }
 
         class Human
         {
-            protected int _health;
+            private int _health;
             private int _agility;
 
-            protected void Die()
+            private void Die()
             {
                 Console.WriteLine("Я умер");
             }
 
-            public virtual void TakeDamage(int damage)
+            protected void ReduceHealth(int deltaHealth)
             {
-                _health -= damage / _agility;
+                _health -= deltaHealth;
+            }
+
+            protected virtual void ReceiveDamage(int damage)
+            {
+                ReduceHealth(damage / _agility);
+                Console.WriteLine("Родитель");
+            }
+
+            public void TakeDamage(int damage)
+            {
+                ReceiveDamage(damage);
 
                 if (_health <= 0)
                     Die();
