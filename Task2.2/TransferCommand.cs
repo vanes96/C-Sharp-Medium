@@ -13,13 +13,16 @@ namespace Task2._2
 
         public override void Execute(ref List<Account> accounts)
         {
-            if (accounts.Single(a => a.Id == AccountId).GetMoney(Amount))
+            try
             {
+                accounts.Single(a => a.Id == AccountId).TakeMoney(Amount);
                 accounts.Single(a => a.Id == ReceiverId).PutMoney(Amount);
-                Console.WriteLine("Операция выполнена успешно");
+                //Console.WriteLine("Операция выполнена успешно");
             }
-            else
-                throw new Exception("Невозможно осуществить перевод средств");
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public TransferCommand(int senderId, int receiverId, int amount)

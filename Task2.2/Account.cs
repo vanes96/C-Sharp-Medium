@@ -19,47 +19,30 @@ namespace Task2._2
             OwnerName = ownerName;
         }
 
-        public bool GetMoney(int amount)
+        public void TakeMoney(int amount)
         {
-            try
-            {
-                if (amount <= 0)
-                    throw new ArgumentOutOfRangeException(amount.ToString());
+            if (amount <= 0)
+                throw new ArgumentOutOfRangeException(amount.ToString());
 
-                if (Balance >= amount)
-                {
-                    Balance -= amount;
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("На счете недостаточно средств");
-                    return false;
-                }
-            }
-            catch(Exception e)
+            if (Balance >= amount)
             {
-                Console.WriteLine("Произошла ошибка {0}", e);
-                return false;
+                Balance -= amount;
+                //return true;
+            }
+            else
+            {
+                throw new Exception("На счете недостаточно средств");
+                //return false;
             }
         }
 
-        public bool PutMoney(int amount)
+        public void PutMoney(int amount)
         {
-            try
-            {
-                if (amount <= 0)
-                    throw new ArgumentOutOfRangeException(amount.ToString());
+            if (amount <= 0)
+                throw new ArgumentOutOfRangeException(amount.ToString());
 
-                Balance += amount;
-                Console.WriteLine("Операция выполнена успешно");
-                return true;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Произошла ошибка {0}", e);
-                return false;
-            }
+            Balance += amount;
+            //return true;
         }
     }
 }
