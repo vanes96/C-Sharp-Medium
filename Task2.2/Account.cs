@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2._2
 {
@@ -25,15 +21,9 @@ namespace Task2._2
                 throw new ArgumentOutOfRangeException(amount.ToString());
 
             if (Balance >= amount)
-            {
                 Balance -= amount;
-                //return true;
-            }
             else
-            {
                 throw new Exception("На счете недостаточно средств");
-                //return false;
-            }
         }
 
         public void PutMoney(int amount)
@@ -42,7 +32,6 @@ namespace Task2._2
                 throw new ArgumentOutOfRangeException(amount.ToString());
 
             Balance += amount;
-            //return true;
         }
     }
 }

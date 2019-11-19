@@ -7,14 +7,12 @@ namespace Task2._2
     {
         public string OwnerName { get; private set; }
 
-        public override void Execute(ref List<Account> accounts)
+        public override void Do()
         {
             if (string.IsNullOrWhiteSpace(OwnerName))
                 throw new Exception("Введено некорректное имя");
 
-            AccountId = accounts.Count + 1;
-            accounts.Add(new Account(AccountId, OwnerName));
-            //Console.WriteLine("Операция выполнена успешно");
+            //Bank.Accounts
         }
 
         public OpenCommand(string ownerName)
@@ -24,7 +22,6 @@ namespace Task2._2
 
             OwnerName = ownerName;
             Name = "open";
-            //Console.WriteLine("Операция выполнена успешно");
         }
     }
 }
