@@ -18,6 +18,9 @@ namespace Task2._4
             {
                 try
                 {
+                    string[] fileNameParts = file.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                    Console.WriteLine($"\"{fileNameParts[fileNameParts.Length - 1]}\":\n-------------");
+
                     using (StreamReader sr = new StreamReader(file, System.Text.Encoding.Default))
                     {
                         while (!sr.EndOfStream)
@@ -27,7 +30,7 @@ namespace Task2._4
                         }
                     }
 
-                    Console.WriteLine();
+                    Console.Write("\n\n");
                     Thread.Sleep(3000);
                 }
                 catch (Exception e)
@@ -35,18 +38,15 @@ namespace Task2._4
                     Console.WriteLine(e.Message);
                 }
             }
+
+            Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
 
         private static bool HasDigit(string fileName)
         {
-            const string digits = "0123456789";
-
-            foreach(char digit in digits)
-                if (fileName.Contains(digit))
-                    return true;
-
-            return false;
+            string[] fileNameParts = fileName.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+            return fileNameParts[fileNameParts.Length - 1].Any(c => char.IsDigit(c));
         }
     }
 }
