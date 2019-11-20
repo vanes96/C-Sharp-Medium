@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2._5
 {
     public static class Store
     {
         private static List<Good> _goods = new List<Good>();
-        private static int _nextGoodId = 1;
+        public static int NextGoodId { get; private set; } = 1;
 
         public static bool FindId(int id)
         {
@@ -23,24 +21,17 @@ namespace Task2._5
 
         public static Good GetGood(int id)
         {
-            try
-            {
-                Good good = _goods.Single(g => g.Id == id);
+            Good good = _goods.Single(g => g.Id == id);
 
-                if (good != null)
-                    return good;
-                else
-                    throw new Exception("Недопустимое значение идентификатора!");
-            }
-            catch (Exception)
-            {
-                throw new Exception("Недопустимое значение идентификатора!");
-            }
+            if (good != null)
+                return good;
+            else
+                throw new Exception("Wrong id!");
         }
 
         public static void ShowGoods()
         {
-            Console.WriteLine("Товары\n======");
+            Console.WriteLine("\nGoods\n======");
 
             foreach (var good in _goods)
                 Console.WriteLine("{0})  {1}  {2}", good.Id, good.Name, good.Price);
@@ -55,19 +46,18 @@ namespace Task2._5
             {
                 good.UseDiscount(discount.Value);
                 if (!pickup)
-                    throw new Exception("Товар со скидкой доступен только для самовывоза!");
+                    throw new Exception("Discount good is available only for pickup!");
             }
 
             _goods.Remove(good);
-            Console.WriteLine("\nКуплен товар\n======");
-            Console.WriteLine("{0})  {1}  {2}  {3}  {4}", good.Id, good.Name, good.DiscountPrice ?? good.Price, discount != null ? $"Скидка {discount}%" : "Без скидки", pickup ? "Самовывоз" : "Доставка");
+            Console.WriteLine("\nGood has been bought\n======");
+            Console.WriteLine("{0})  {1}  {2}  {3}  {4}", good.Id, good.Name, good.DiscountPrice ?? good.Price, discount != null ? $"Discount {discount}%" : "No discount", pickup ? "Pickup" : "Delivery");
         }
 
         public static void AddGood(Good good)
         {
-            good.Id = _nextGoodId;
             _goods.Add(good);
-            _nextGoodId++;
+            NextGoodId++;
         }
 
     }

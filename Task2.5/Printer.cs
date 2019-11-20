@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2._5
 {
@@ -15,7 +11,7 @@ namespace Task2._5
             if (cartridgeNumber > 0 && cartridgeNumber < 1000)
                 CartridgeNumber = cartridgeNumber;
             else
-                throw new Exception("Недопустимый номер картриджа!");
+                throw new Exception("Wrong cartridge number!");
         }
     }
 }

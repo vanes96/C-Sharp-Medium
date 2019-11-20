@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2._5
 {
@@ -13,6 +9,7 @@ namespace Task2._5
             Store.AddGood(new Phone("Iphone_8", 50000, 5.5f));
             Store.AddGood(new Printer("Hp_500", 5600, 178));
 
+            Console.WriteLine("Press any key..");
             while(Console.ReadKey(true).Key != ConsoleKey.Escape)
             {
                 Store.ShowGoods();
@@ -23,7 +20,7 @@ namespace Task2._5
                 {
                     if (!int.TryParse(Console.ReadLine(), out goodId))
                     {
-                        throw new Exception("Некорректный идентификатор!");
+                        throw new Exception("Wrong id!");
                     }
                     else if (Store.FindId(goodId))
                     {
@@ -34,7 +31,7 @@ namespace Task2._5
                         if (!string.IsNullOrWhiteSpace(discountString))
                         {
                             if (!int.TryParse(discountString, out discount))
-                                throw new Exception("Некорректная скидка!");
+                                throw new Exception("Wrong discount!");
                         }
 
                         Console.WriteLine("Will be pickup?: y/n");
@@ -46,7 +43,7 @@ namespace Task2._5
                         else if (pickupString == "n")
                             pickup = false;
                         else
-                            throw new Exception("Недопустимая команда!");
+                            throw new Exception("Wrong command!");
 
                         if (discount == -1)
                             Store.BuyGood(goodId, pickup);
@@ -54,7 +51,7 @@ namespace Task2._5
                             Store.BuyGood(goodId, pickup, discount);
                     }
                     else
-                        throw new Exception("Идентификатор не найден!");
+                        throw new Exception("Wrong id!");
                 }              
                 catch (Exception e)
                 {

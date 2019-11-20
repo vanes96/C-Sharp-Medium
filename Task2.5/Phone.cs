@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2._5
 {
@@ -15,7 +11,7 @@ namespace Task2._5
             if (screenSize > 0 && screenSize < 10)
                 ScreenSize = screenSize;
             else
-                throw new Exception("Недопустимый размер экрана!");
+                throw new Exception("Wrong screen size!");
         }
     }
 }
