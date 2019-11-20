@@ -4,9 +4,9 @@ namespace Task2._2
 {
     public class Account
     {
-        public int Balance { get; private set; }
         public int Id { get; }
         public string OwnerName { get; }
+        public int Balance { get; private set; }
 
         public Account(int id, string ownerName)
         {
@@ -23,7 +23,7 @@ namespace Task2._2
             if (Balance >= amount)
                 Balance -= amount;
             else
-                throw new Exception("На счете недостаточно средств");
+                throw new Exception("Account does not have enough money");
         }
 
         public void PutMoney(int amount)

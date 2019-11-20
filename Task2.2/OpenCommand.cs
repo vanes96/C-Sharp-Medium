@@ -5,20 +5,22 @@ namespace Task2._2
 {
     public class OpenCommand : Command
     {
-        public string OwnerName { get; private set; }
+        private string OwnerName { get; }
 
         public override void Do()
         {
-            if (string.IsNullOrWhiteSpace(OwnerName))
-                throw new Exception("Введено некорректное имя");
+            AccountId = Bank.OpenAccount(OwnerName);
+        }
 
-            //Bank.Accounts
+        public override void Undo()
+        {
+            Bank.CloseAccount(AccountId);
         }
 
         public OpenCommand(string ownerName)
         {
             if (string.IsNullOrWhiteSpace(ownerName))
-                throw new Exception("Введено некорректное имя!");
+                throw new Exception("Wrong owner name!");
 
             OwnerName = ownerName;
             Name = "open";

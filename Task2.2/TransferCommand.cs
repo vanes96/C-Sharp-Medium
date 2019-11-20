@@ -6,20 +6,19 @@ namespace Task2._2
 {
     public class TransferCommand : Command
     {
-        public int ReceiverId { get; private set; }
-        public int Amount { get; private set; }
+        private int ReceiverId { get; }
+        private int Amount { get; }
 
-        public override void Do(ref List<Account> accounts)
+        public override void Do()
         {
-            try
-            {
-                accounts.Single(a => a.Id == AccountId).TakeMoney(Amount);
-                accounts.Single(a => a.Id == ReceiverId).PutMoney(Amount);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            new GetCommand(AccountId, Amount).Do();
+            new PutCommand(ReceiverId, Amount).Do();
+        }
+
+        public override void Undo()
+        {
+            new GetCommand(AccountId, Amount).Undo();
+            new PutCommand(ReceiverId, Amount).Undo();
         }
 
         public TransferCommand(int senderId, int receiverId, int amount)

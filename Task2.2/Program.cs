@@ -6,28 +6,25 @@ namespace Task2._2
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
-            List<Command> commands = new List<Command>();
-            List<Account> accounts = new List<Account>();
-
-            while(Console.ReadKey().Key != ConsoleKey.Escape)
+            Console.WriteLine("Press any key..");
+            while (Console.ReadKey().Key != ConsoleKey.Escape)
             {
                 Console.Clear();
-                Console.WriteLine("Please enter command..");
+                Console.WriteLine("Please enter command");
                 string commandName = Console.ReadLine();
                 Command command;
-
 
                 switch (commandName)
                 {
                     case "open":
-                        Console.WriteLine("Please enter your name..");
+                        Console.WriteLine("Please enter your name");
                         try
                         {
                             command = new OpenCommand(Console.ReadLine());
-                            command.Do(ref accounts);
-                            commands.Add(command);
+                            Bank.DoCommand(command);
+                            ShowSuccessMessage();
                         }
                         catch (Exception e)
                         {
@@ -35,19 +32,41 @@ namespace Task2._2
                         }
                         break;
                     case "put":
-
+                        Console.WriteLine("Please enter: \"accountId amount\"");
+                        try
+                        {
+                            string[] commandInput = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                            command = new PutCommand(int.Parse(commandInput[0]), int.Parse(commandInput[1]));
+                            Bank.DoCommand(command);
+                            ShowSuccessMessage();
+                        }
+                        catch (Exception e)
+                        {
+                            ShowErrorMessage(e);
+                        }
                         break;
                     case "get":
-
+                        Console.WriteLine("Please enter: \"accountId amount\"");
+                        try
+                        {
+                            string[] commandInput = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                            command = new GetCommand(int.Parse(commandInput[0]), int.Parse(commandInput[1]));
+                            Bank.DoCommand(command);
+                            ShowSuccessMessage();
+                        }
+                        catch (Exception e)
+                        {
+                            ShowErrorMessage(e);
+                        }
                         break;
                     case "transfer":
-                        Console.WriteLine("Please enter: senderId receiverId amount..");
+                        Console.WriteLine("Please enter: \"senderId receiverId amount\"");
                         try
                         {
                             string[] transferInput = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                             command = new TransferCommand(int.Parse(transferInput[0]), int.Parse(transferInput[1]), int.Parse(transferInput[2]));
-                            command.Do(ref accounts);
-                            commands.Add(command);                      
+                            Bank.DoCommand(command);
+                            ShowSuccessMessage();
                         }
                         catch(Exception e)
                         {
@@ -55,34 +74,44 @@ namespace Task2._2
                         }
                         break;
                     case "close":
-                        Console.WriteLine("Please enter account id..");
-                        command = new CloseCommand(int.Parse(Console.ReadLine()));
-                        commands.Add(command);
-                        command.Do(ref accounts);
+                        Console.WriteLine("Please enter account id");
+                        try
+                        {
+                            command = new CloseCommand(int.Parse(Console.ReadLine()));
+                            Bank.DoCommand(command);
+                            ShowSuccessMessage();
+                        }
+                        catch(Exception e)
+                        {
+                            ShowErrorMessage(e);
+                        }
                         break;
                     case "undo":
-                        command = commands.Last();
-                        Command undoCommand;
-
-                        switch (command.Name)
+                        try
                         {
-                            case "open":
-                                undoCommand = new CloseCommand(command.AccountId);
-                                undoCommand.Do(ref accounts);
-                                break;
-                            case "close":
-                                undoCommand = new OpenCommand((command as OpenCommand).OwnerName);
-                                undoCommand.Do(ref accounts);
-                                break;
-                            case "undo":
-
-                            break;
+                            Bank.UndoCommand();
+                            ShowSuccessMessage();
                         }
-
-                        commands.Remove(command);
+                        catch(Exception e)
+                        {
+                            ShowErrorMessage(e);
+                        }
+                        break;
+                    case "show":
+                        Console.WriteLine("Please enter account id");
+                        try
+                        {
+                            int accountId = int.Parse(Console.ReadLine());
+                            var account = Bank.GetAccount(accountId);
+                            Console.WriteLine($"=================\n{account.Id} {account.OwnerName} {account.Balance}");
+                        }
+                        catch(Exception e)
+                        {
+                            ShowErrorMessage(e);
+                        }
                         break;
                     default:
-                        Console.WriteLine("Command {0} doesnt exist", commandName);
+                        ShowErrorMessage(new Exception($"Command {commandName} does not exist"));
                         break;
                 }
             }
@@ -92,6 +121,13 @@ namespace Task2._2
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(e.Message);
+            Console.ResetColor();
+        }
+
+        static void ShowSuccessMessage() 
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Command has been done.");
             Console.ResetColor();
         }
     }

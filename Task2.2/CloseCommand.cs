@@ -5,14 +5,21 @@ namespace Task2._2
 {
     public class CloseCommand : Command
     {
-        public override void Do(ref List<Account> accounts)
+        private string OwnerName { get; }
+
+        public override void Do()
         {
-            if (accounts.RemoveAll(a => a.Id == AccountId) <= 0)
-                throw new Exception("Счета с таким Id не существует");
+            Bank.CloseAccount(AccountId);
+        }
+
+        public override void Undo()
+        {
+            Bank.OpenAccount(OwnerName);
         }
 
         public CloseCommand(int accountId)
         {
+            OwnerName = Bank.GetAccount(accountId).OwnerName;
             AccountId = accountId;
             Name = "close";
         }
